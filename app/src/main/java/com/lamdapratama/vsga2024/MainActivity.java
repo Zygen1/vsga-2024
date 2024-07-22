@@ -1,6 +1,9 @@
 package com.lamdapratama.vsga2024;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +12,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    EditText inputNama;
+    TextView textNama;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +26,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        inputNama = findViewById(R.id.editText);
+        textNama = findViewById(R.id.textView);
+    }
+
+    public void showName(View view) {
+        textNama.setText(getString(R.string.nama_anda, inputNama.getText()));
     }
 }
