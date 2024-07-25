@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -12,25 +11,25 @@
         android:id="@+id/btn_buat_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BUAT FILE" />
+        android:text="@string/buat_file" />
 
     <Button
         android:id="@+id/btn_ubah_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="UBAH FILE" />
+        android:text="@string/ubah_file" />
 
     <Button
         android:id="@+id/btn_baca_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BACA FILE" />
+        android:text="@string/baca_file" />
 
     <Button
         android:id="@+id/btn_hapus_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="HAPUS FILE" />
+        android:text="@string/hapus_file" />
 
     <TextView
         android:id="@+id/text_baca"
@@ -38,9 +37,9 @@
         android:layout_height="210dp"
         android:background="@android:color/darker_gray"
         android:ems="10"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:padding="5dp"
         android:textColorHint="#000"
-        android:hint="Hasil Baca File"
+        android:hint="@string/hasil_baca_file"
         android:inputType="textMultiLine"/>
 </LinearLayout>

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">VSGA 2024</string>
+    <string name="hasil_baca_file">Hasil Baca File</string>
+    <string name="hapus_file">HAPUS FILE</string>
+    <string name="baca_file">BACA FILE</string>
+    <string name="ubah_file">UBAH FILE</string>
+    <string name="buat_file">BUAT FILE</string>
 </resources>
