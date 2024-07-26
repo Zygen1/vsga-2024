@@ -2,9 +2,7 @@ package com.lamdapratama.vsga2024;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +14,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity /*implements View.OnClickListener*/ {
 
-    /*public static final String FILENAME = "nama_file.txt";
-    Button buatFile, ubahFile, bacaFile, hapusFile;
-    TextView textBaca;*/
 
     private static final String FILENAME = "catatan.text";
     private EditText editText;
@@ -37,19 +33,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             return insets;
         });
 
-
-        /*buatFile = findViewById(R.id.btn_buat_file);
-        ubahFile = findViewById(R.id.btn_ubah_file);
-        bacaFile = findViewById(R.id.btn_baca_file);
-        hapusFile = findViewById(R.id.btn_hapus_file);
-        textBaca = findViewById(R.id.text_baca);
-
-        buatFile.setOnClickListener(this);
-        ubahFile.setOnClickListener(this);
-        bacaFile.setOnClickListener(this);
-        hapusFile.setOnClickListener(this);*/
-
         editText = findViewById(R.id.edit_text);
+
+        bacaFile();
     }
 
     private void buatFile(){
@@ -67,88 +53,43 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         }
     }
 
-    public void onClick(View view){
-        if(view.getId() == R.id.btn_buat_file){
-            buatFile();
-        }
-    }
-
-    /*void buatFile() {
-        String isiFile = "Coba isi Data File Text";
+    private void bacaFile(){
         File file = new File(getFilesDir(), FILENAME);
-
-        FileOutputStream outputStream;
-        try{
-            file.createNewFile();
-            outputStream = new FileOutputStream(file);
-            outputStream.write(isiFile.getBytes());
-            outputStream.flush();
-            outputStream.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    void ubahFile() {
-        String ubah = "Update Isi Data File Text";
-        File file = new File(getFilesDir(), FILENAME);
-        FileOutputStream outputStream;
-        try {
-            file.createNewFile();
-            outputStream = new FileOutputStream(file, false);
-            outputStream.write(ubah.getBytes());
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    void bacaFile(){
-        File sdCard = getFilesDir();
-        File file = new File(sdCard, FILENAME);
-
         if(file.exists()){
             StringBuilder text = new StringBuilder();
-
             try{
                 BufferedReader br = new BufferedReader(new FileReader(file));
-
                 String line = br.readLine();
-
                 while(line != null){
                     text.append(line);
                     line = br.readLine();
                 }
                 br.close();
-            }catch (Exception e){
-                System.out.println("Error: " + e.getMessage());
+            }catch(IOException e){
+                e.printStackTrace();
             }
-            textBaca.setText(text.toString());
+            editText.setText(text);
+        }else{
+            editText.setText("");
         }
     }
 
-    void hapusFile(){
+    private void hapusFile(){
         File file = new File(getFilesDir(), FILENAME);
-        if (file.exists()) {
+        if(file.exists()){
             file.delete();
+            editText.setText("");
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        jalankanPerintah(v.getId());
-    }
-
-    public void jalankanPerintah(int id) {
-        if(id == R.id.btn_buat_file){
+    public void onClick(View view){
+        if(view.getId() == R.id.btn_buat_file){
             buatFile();
-        }else if(id == R.id.btn_baca_file){
+        }else if(view.getId() == R.id.btn_baca_file){
             bacaFile();
-        }else if(id == R.id.btn_ubah_file){
-            ubahFile();
-        }else if(id == R.id.btn_hapus_file){
+        }
+        else if(view.getId() == R.id.btn_hapus_file){
             hapusFile();
         }
-    }*/
+    }
 }
