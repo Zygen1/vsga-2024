@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:layout_margin="16dp">
 
     <Button
         android:id="@+id/btn_buat_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/buat_file" />
+        android:text="@string/buat_file"
+        android:onClick="onClick"/>
 
     <Button
         android:id="@+id/btn_ubah_file"
@@ -31,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="@string/hapus_file" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/text_baca"
         android:layout_width="match_parent"
         android:layout_height="210dp"
@@ -41,5 +43,14 @@
         android:padding="5dp"
         android:textColorHint="#000"
         android:hint="@string/hasil_baca_file"
-        android:inputType="textMultiLine"/>
+        android:inputType="textMultiLine"/>-->
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="text"/>
+
 </LinearLayout>

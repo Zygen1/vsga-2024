@@ -3,6 +3,7 @@ package com.lamdapratama.vsga2024;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,11 +17,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity /*implements View.OnClickListener*/ {
 
-    public static final String FILENAME = "nama_file.txt";
+    /*public static final String FILENAME = "nama_file.txt";
     Button buatFile, ubahFile, bacaFile, hapusFile;
-    TextView textBaca;
+    TextView textBaca;*/
+
+    private static final String FILENAME = "catatan.text";
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return insets;
         });
 
-        buatFile = findViewById(R.id.btn_buat_file);
+
+        /*buatFile = findViewById(R.id.btn_buat_file);
         ubahFile = findViewById(R.id.btn_ubah_file);
         bacaFile = findViewById(R.id.btn_baca_file);
         hapusFile = findViewById(R.id.btn_hapus_file);
@@ -42,10 +47,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buatFile.setOnClickListener(this);
         ubahFile.setOnClickListener(this);
         bacaFile.setOnClickListener(this);
-        hapusFile.setOnClickListener(this);
+        hapusFile.setOnClickListener(this);*/
+
+        editText = findViewById(R.id.edit_text);
     }
 
-    void buatFile() {
+    private void buatFile(){
+        File file = new File(getFilesDir(), FILENAME);
+        FileOutputStream fos;
+
+        try{
+            file.createNewFile();
+            fos = new FileOutputStream(file, false);
+            fos.write(editText.getText().toString().getBytes());
+            fos.flush();
+            fos.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void onClick(View view){
+        if(view.getId() == R.id.btn_buat_file){
+            buatFile();
+        }
+    }
+
+    /*void buatFile() {
         String isiFile = "Coba isi Data File Text";
         File file = new File(getFilesDir(), FILENAME);
 
@@ -122,5 +150,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(id == R.id.btn_hapus_file){
             hapusFile();
         }
-    }
+    }*/
 }
