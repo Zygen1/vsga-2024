@@ -1,6 +1,11 @@
 package com.lamdapratama.vsga2024;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +13,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    private Button btnStore, btnGetall;
+    private EditText etname;
+    private DatabaseHelper databaseHelper;
+    private TextView tvnames;
+    private ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +32,32 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        databaseHelper = new DatabaseHelper(this);
+        tvnames = findViewById(R.id.tvnames);
+        btnStore = findViewById(R.id.btnstore);
+        btnGetall = findViewById(R.id.btnget);
+        etname = findViewById(R.id.etname);
+
+        btnStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseHelper.addStudentDetail(etname.getText().toString());
+                etname.setText("");
+                Toast.makeText(MainActivity.this, "Stored Successfully!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnGetall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayList = databaseHelper.getAllStudentsList();
+                tvnames.setText("");
+                for(int i = 0; i < arrayList.size(); i++){
+                    tvnames.setText(tvnames.getText().toString() + "," + arrayList.get(i));
+                }
+            }
         });
     }
 }
