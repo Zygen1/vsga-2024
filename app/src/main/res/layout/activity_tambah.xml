@@ -12,7 +12,7 @@
     tools:context=".TambahActivity">
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/namaEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -20,7 +20,7 @@
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/alamatEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -40,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="@string/submit" />
+            android:text="@string/submit"
+            android:onClick="submit"/>
 
         <Button
             android:id="@+id/button2"
@@ -48,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:onClick="cancel"/>
     </LinearLayout>
 </LinearLayout>
