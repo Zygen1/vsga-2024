@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">VSGA 2024</string>
+    <string name="app_name">Aplikasi SQLite</string>
+    <string name="tambah_kontak">Tambah Kontak</string>
+    <string name="input_nama">Input nama</string>
+    <string name="input_alamat">Input alamat</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
 </resources>
