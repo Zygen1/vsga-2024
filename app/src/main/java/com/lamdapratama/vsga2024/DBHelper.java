@@ -40,9 +40,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert("kontak", null, values);
     }
 
-    public long hapusKontak(String nama){
+    public long hapusKontak(String id){
         SQLiteDatabase db = getWritableDatabase();
-        return db.delete("kontak", "nama=?", new String[]{nama});
+        return db.delete("kontak", "id=?", new String[]{id});
+    }
+
+    public long updateKontak(String id, String nama, String alamat){
+        ContentValues values = new ContentValues();
+        values.put("alamat", alamat);
+        values.put("nama", nama);
+        SQLiteDatabase db = getWritableDatabase();
+        return db.update("kontak", values, "id=?", new String[]{id});
     }
 
     public ArrayList<Kontak> getData(){
@@ -53,9 +61,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         while(cursor.moveToNext()){
+            String id = cursor.getString(0);
             String nama = cursor.getString(1);
             String alamat = cursor.getString(2);
-            result.add(new Kontak(nama, alamat));
+            result.add(new Kontak(id, nama, alamat));
         }
 
         return result;

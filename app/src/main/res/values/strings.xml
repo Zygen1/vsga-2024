@@ -5,4 +5,6 @@
     <string name="input_alamat">Input alamat</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="edit_kontak">Edit Kontak</string>
 </resources>
