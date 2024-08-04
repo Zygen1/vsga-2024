@@ -40,6 +40,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert("kontak", null, values);
     }
 
+    public long hapusKontak(String nama){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete("kontak", "nama=?", new String[]{nama});
+    }
+
     public ArrayList<Kontak> getData(){
         ArrayList<Kontak> result = new ArrayList<>();
 

@@ -1,10 +1,15 @@
 package com.lamdapratama.vsga2024;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -40,6 +45,29 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         adapter = new MainAdapter(this);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String[] opsi = {"Edit", "Hapus"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Dipilih: " + adapter.getItem(position).getNama());
+                builder.setItems(opsi, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if("Edit".equals(opsi[which])){
+
+                        }
+                        else if("Hapus".equals(opsi[which])){
+                            dbhelper.hapusKontak(adapter.getItem(position).getNama());
+                            onResume();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
     @Override
