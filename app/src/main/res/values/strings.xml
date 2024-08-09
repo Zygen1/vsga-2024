@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VSGA 2024</string>
+    <string name="nilai_sensor_cahaya_n0_0">Nilai sensor cahaya:\n0.00</string>
+    <string name="nilai_sensor_cahaya_n">Nilai sensor cahaya:\n%1$.2f</string>
 </resources>
