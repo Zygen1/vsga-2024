@@ -69,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String nama = cursor.getString(1);
             int harga = cursor.getInt(2);
             String catatan = cursor.getString(3);
-            result.add(new Belanja(id, nama, harga, catatan );
+            result.add(new Belanja(id, nama, harga, catatan ));
         }
 
         return result;
