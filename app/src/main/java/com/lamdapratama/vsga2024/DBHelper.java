@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -21,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     ")";
 
     public DBHelper(@Nullable Context context) {
-        super(context, "data.db", null, 1);
+        super(context, "dataBelanja.db", null, 1);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { }
 
-    public long TambahDaftar(String nama, int harga, String catatan) {
+    public long tambahDaftar(String nama, int harga, String catatan) {
         ContentValues values = new ContentValues();
         values.put("nama", nama);
         values.put("harga", harga);
@@ -42,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert("daftar_belanja", null, values);
     }
 
-    public long UpdateDaftar(String id, String nama, int harga, String catatan) {
+    public long updateDaftar(String id, String nama, int harga, String catatan) {
         ContentValues values = new ContentValues();
         values.put("nama", nama);
         values.put("harga", harga);
@@ -52,15 +53,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.update("daftar_belanja", values, "id=?", new String[]{id});
     }
 
-    public long HapusDaftar(String id) {
+    public long hapusDaftar(String id) {
         SQLiteDatabase db = getWritableDatabase();
         return db.delete("daftar_belanja", "id=?", new String[]{id});
     }
 
-    public ArrayList<Belanja> GetData(){
+    public ArrayList<Belanja> getData(){
         ArrayList<Belanja> result = new ArrayList<>();
 
-        String query = "SELECT * FROM kontak";
+        String query = "SELECT * FROM daftar_belanja";
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -69,9 +70,43 @@ public class DBHelper extends SQLiteOpenHelper {
             String nama = cursor.getString(1);
             int harga = cursor.getInt(2);
             String catatan = cursor.getString(3);
-            result.add(new Belanja(id, nama, harga, catatan ));
+            result.add(new Belanja(id, nama, harga, catatan));
         }
+
+        cursor.close();
 
         return result;
     }
+
+    public ArrayList<Belanja> getDataSorted(String sortBy) {
+        ArrayList<Belanja> belanjaList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM daftar_belanja";
+
+        switch (sortBy) {
+            case "price_asc":
+                query += " ORDER BY harga ASC";
+                break;
+            case "price_desc":
+                query += " ORDER BY harga DESC";
+                break;
+            case "name":
+                query += " ORDER BY nama ASC";
+                break;
+        }
+
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(0);
+                String nama = cursor.getString(1);
+                int harga = cursor.getInt(2);
+                String catatan = cursor.getString(3);
+                belanjaList.add(new Belanja(id, nama, harga, catatan));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return belanjaList;
+    }
+
 }

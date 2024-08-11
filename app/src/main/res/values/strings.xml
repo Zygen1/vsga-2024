@@ -3,4 +3,8 @@
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="tambah_daftar">Tambah Daftar</string>
+    <string name="nama">Nama:</string>
+    <string name="harga">Harga:</string>
+    <string name="catatan">Catatan:</string>
+    <string name="update">Update</string>
 </resources>

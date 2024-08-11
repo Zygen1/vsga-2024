@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Locale;
 
-public class TambahActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity {
 
     private DBHelper dbHelper;
     private EditText etNama;
@@ -26,7 +26,7 @@ public class TambahActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_tambah);
+        setContentView(R.layout.activity_edit);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -34,15 +34,28 @@ public class TambahActivity extends AppCompatActivity {
         });
 
         dbHelper = new DBHelper(this);
-        etNama = findViewById(R.id.etNama);
-        etHarga = findViewById(R.id.etHarga);
-        etCatatan = findViewById(R.id.etCatatan);
+        etNama = findViewById(R.id.etNamaActivityEdit);
+        etHarga = findViewById(R.id.etHargaActivityEdit);
+        etCatatan = findViewById(R.id.etCatatanActivityEdit);
 
         setupHargaTextWatcher();
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            etNama.setText(extras.getString("nama"));
+            etHarga.setText(String.valueOf(extras.getInt("harga")));
+            etCatatan.setText(extras.getString("catatan"));
+        }
+
     }
 
-    public void submitBTN(View view) {
+    public void cancelBTN(View view){
+        finish();
+    }
+
+    public void updateBTN(View view){
+        String id = getIntent().getExtras().getString("id");
+
         //sanity check
         String nama = etNama.getText().toString();
         if(nama.isEmpty()){
@@ -63,11 +76,7 @@ public class TambahActivity extends AppCompatActivity {
             catatan = "-Tidak ada catatan-";
         }
 
-        dbHelper.tambahDaftar(nama, hargaInt, catatan);
-        finish();
-    }
-
-    public void cancelBTN(View view) {
+        dbHelper.updateDaftar(id, nama, hargaInt, catatan);
         finish();
     }
 
