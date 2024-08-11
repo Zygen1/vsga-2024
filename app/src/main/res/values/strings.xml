@@ -7,4 +7,9 @@
     <string name="harga">Harga:</string>
     <string name="catatan">Catatan:</string>
     <string name="update">Update</string>
+    <string-array name="sort_array">
+        <item>Harga Terendah</item>
+        <item>Harga Tertinggi</item>
+        <item>Tidak Ada</item>
+    </string-array>
 </resources>

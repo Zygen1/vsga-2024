@@ -93,6 +93,9 @@ public class DBHelper extends SQLiteOpenHelper {
             case "name":
                 query += " ORDER BY nama ASC";
                 break;
+            case "default":
+                query += " ORDER BY id ASC";
+                break;
         }
 
         Cursor cursor = db.rawQuery(query, null);

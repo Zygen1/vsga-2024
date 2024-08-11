@@ -1,28 +1,27 @@
 package com.lamdapratama.vsga2024;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton addListFAB;
     private ListView lvList;
     private TextView totalTV;
-    private MainAdapter adapter;
+    private MainAdapter adapterMain;
     private DBHelper dbHelper;
+    private Spinner spSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +44,63 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        dbHelper = new DBHelper(this);
+        initViews();
+        setupSortSpinner();
+        setupFAB();
+        setupListView();
+    }
+
+    private void initViews(){
         addListFAB = findViewById(R.id.fabAddList);
+        lvList = findViewById(R.id.lvList);
+        totalTV = findViewById(R.id.tvTotal);
+        spSort = findViewById(R.id.spSort);
+    }
+
+    private void setupSortSpinner(){
+        ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(
+                this,
+                R.array.sort_array,
+                android.R.layout.simple_spinner_item
+        );
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spSort.setAdapter(adapterSpinner);
+        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0: // Sort by price ascending
+                        sortDataByPriceAscending();
+                        break;
+                    case 1: // Sort by price descending
+                        sortDataByPriceDescending();
+                        break;
+                    case 2:
+                        sortDataDefault();
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                sortDataDefault();
+            }
+        });
+    }
+
+    private void setupFAB() {
         addListFAB.setOnClickListener(v -> {
             Intent i = new Intent(MainActivity.this, TambahActivity.class);
             startActivity(i);
         });
+    }
 
-
-        totalTV = findViewById(R.id.tvTotal);
-        dbHelper = new DBHelper(this);
-
-        lvList = findViewById(R.id.lvList);
-        adapter = new MainAdapter(this);
-        lvList.setAdapter(adapter);
+    private void setupListView(){
+        adapterMain = new MainAdapter(this);
+        lvList.setAdapter(adapterMain);
         lvList.setOnItemClickListener((parent, view, position, id) -> {
-            Belanja belanja = adapter.getItem(position);
+            Belanja belanja = adapterMain.getItem(position);
 
             // Inflate the bottom sheet layout
             View bottomSheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_detail, null);
@@ -107,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.clear();
-        adapter.addAll(dbHelper.getData());
+        adapterMain.clear();
+        adapterMain.addAll(dbHelper.getData());
 
         int total = 0;
         for (Belanja belanja : dbHelper.getData()) {
@@ -117,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         totalTV.setText("Total: Rp." + formattedNumber(total));
 
-        sortDataByPriceAscending();
+
     }
 
     private String formattedNumber(int harga) {
@@ -128,21 +170,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void sortDataByPriceAscending() {
         ArrayList<Belanja> data = dbHelper.getDataSorted("price_asc");
-        adapter.clear();
-        adapter.addAll(data);
+        adapterMain.clear();
+        adapterMain.addAll(data);
     }
 
     private void sortDataByPriceDescending() {
         ArrayList<Belanja> data = dbHelper.getDataSorted("price_desc");
-        adapter.clear();
-        adapter.addAll(data);
+        adapterMain.clear();
+        adapterMain.addAll(data);
     }
 
-    private void sortDataByName() {
-        ArrayList<Belanja> data = dbHelper.getDataSorted("name");
-        adapter.clear();
-        adapter.addAll(data);
+    private void sortDataDefault(){
+        ArrayList<Belanja> data = dbHelper.getDataSorted("default");
+        adapterMain.clear();
+        adapterMain.addAll(data);
     }
-
-
 }
