@@ -1,5 +1,6 @@
 package com.lamdapratama.vsga2024;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -27,6 +29,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton addListFAB;
+    private FloatingActionButton deleteAllFAB;
     private ListView lvList;
     private TextView totalTV;
     private MainAdapter adapterMain;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews(){
         addListFAB = findViewById(R.id.fabAddList);
+        deleteAllFAB = findViewById(R.id.fabDeleteAll);
         lvList = findViewById(R.id.lvList);
         totalTV = findViewById(R.id.tvTotal);
         spSort = findViewById(R.id.spSort);
@@ -94,7 +98,26 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this, TambahActivity.class);
             startActivity(i);
         });
+
+        deleteAllFAB.setOnClickListener(v -> {
+            String[] opsi = {"Ya", "Tidak"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Hapus Semua Daftar Belanja?");
+            builder.setItems(opsi, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if ("Ya".equals(opsi[which])) {
+                        dbHelper.hapusSemuaDaftar();
+                        onResume();
+                    } else if ("Tidak".equals(opsi[which])) {
+                        //Do nothing
+                    }
+                }
+            });
+            builder.show();
+        });
     }
+
 
     private void setupListView(){
         adapterMain = new MainAdapter(this);

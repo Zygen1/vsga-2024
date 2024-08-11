@@ -58,6 +58,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.delete("daftar_belanja", "id=?", new String[]{id});
     }
 
+    public long hapusSemuaDaftar() {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete("daftar_belanja", null, null);
+    }
+
     public ArrayList<Belanja> getData(){
         ArrayList<Belanja> result = new ArrayList<>();
 
