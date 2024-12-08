@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".EditActivity">
+    tools:context=".EditActivity"
+    android:layout_marginTop="10dp">
 
     <TextView
         android:id="@+id/tvNamaActivityEdit"
@@ -30,7 +31,9 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/etHargaActivityEdit"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:background="@drawable/rounded_edittext_background"/>
 
     <TextView
         android:id="@+id/tvHargaActivityEdit"
@@ -57,13 +60,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/tvCatatanActivityEdit"
-        app:layout_constraintTop_toBottomOf="@+id/etNamaActivityEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/etNamaActivityEdit"
+        android:background="@drawable/rounded_edittext_background"/>
 
     <TextView
         android:id="@+id/tvCatatanActivityEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:paddingEnd="5dp"
         android:paddingTop="10dp"
         android:layout_marginStart="10dp"
         android:text="@string/catatan"
@@ -75,45 +80,54 @@
         android:id="@+id/etCatatanActivityEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rounded_edittext_background"
         android:ems="10"
+        android:gravity="start|top"
         android:hint="Tambahkan catatan (opsional)"
         android:inputType="textMultiLine"
         android:lines="10"
         android:scrollbars="vertical"
         android:textSize="20sp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:gravity="start|top"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvCatatanActivityEdit"
         app:layout_constraintTop_toBottomOf="@+id/etHargaActivityEdit" />
 
 
     <Button
         android:id="@+id/btnUpdateActivityEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/update"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCatatanActivityEdit"
-        android:layout_marginTop="25dp"
         android:layout_marginStart="10dp"
-        android:paddingStart="70dp"
-        android:paddingEnd="70dp"
-        android:onClick="updateBTN"/>
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded_button_background"
+        android:onClick="updateBTN"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:layout_marginEnd="10dp"
+        android:text="Perbarui"
+        android:textSize="17sp"
+        app:backgroundTint="@color/green"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancelActivityEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCatatanActivityEdit" />
 
     <Button
         android:id="@+id/btnCancelActivityEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/cancel"
+        android:text="Batal"
+        app:layout_constraintStart_toEndOf="@id/btnUpdateActivityEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCatatanActivityEdit"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
         android:paddingStart="70dp"
         android:paddingEnd="70dp"
-        android:onClick="cancelBTN"/>
+        android:onClick="cancelBTN"
+        android:background="@drawable/rounded_button_background"
+        app:backgroundTint="@color/Red"
+        android:textSize="17sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

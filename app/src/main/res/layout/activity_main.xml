@@ -41,25 +41,76 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="20dp"
         android:clickable="true"
         android:contentDescription="Tambahkan list"
-        app:layout_constraintBottom_toTopOf="@+id/tvTotal"
+        app:backgroundTint="@color/green"
+        app:layout_constraintBottom_toTopOf="@+id/etUang"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_add_circle_outline_24" />
+        app:srcCompat="@drawable/baseline_add_circle_outline_24"
+        app:tint="#FFFFFF" />
 
     <TextView
         android:id="@+id/tvTotal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#E9DCFE"
+        android:background="@color/green"
         android:padding="10dp"
         android:text="Total: Rp.0"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/etUang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#369042"
+        android:hint="Masukan umlah uang"
+        android:textColorHint="@color/white"
+        android:textSize="12dp"
+        android:padding="8dp"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotal"
+        app:layout_constraintEnd_toStartOf="@+id/ivKembalian"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="55dp"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/white"/>
+
+    <ImageView
+        android:id="@+id/ivKembalian"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="Icon"
+        android:src="@drawable/baseline_play_arrow_24"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotal"
+        app:layout_constraintEnd_toStartOf="@+id/etKembalian"
+        app:layout_constraintStart_toEndOf="@+id/etUang"
+        android:layout_marginBottom="55dp"/>
+
+    <EditText
+        android:id="@+id/etKembalian"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#369042"
+        android:hint="kembalian"
+        android:textColorHint="@color/white"
+        android:textSize="12dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivKembalian"
+        android:layout_marginBottom="55dp"
+        android:layout_marginEnd="5dp"
+        android:textColor="@color/white"
+        android:editable="false"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDeleteAll"
@@ -67,11 +118,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
-        android:clickable="true"
         android:contentDescription="Hapus semua list"
+        app:backgroundTint="@color/green"
         app:layout_constraintBottom_toTopOf="@+id/fabAddList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_delete_24" />
+        app:srcCompat="@drawable/baseline_delete_24"
+        app:tint="#FFFFFF" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

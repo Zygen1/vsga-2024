@@ -3,10 +3,13 @@ package com.lamdapratama.vsga2024;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private MainAdapter adapterMain;
     private DBHelper dbHelper;
     private Spinner spSort;
+    private EditText etUang, etKembalian;
+    private int currentSort = 2; // Default filter (misalnya: urutan default)
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setupSortSpinner();
         setupFAB();
         setupListView();
+        setupUangListener();
     }
 
     private void initViews(){
@@ -60,7 +67,56 @@ public class MainActivity extends AppCompatActivity {
         lvList = findViewById(R.id.lvList);
         totalTV = findViewById(R.id.tvTotal);
         spSort = findViewById(R.id.spSort);
+        etUang = findViewById(R.id.etUang);
+        etKembalian = findViewById(R.id.etKembalian);
     }
+
+    private void setupUangListener() {
+        etUang.addTextChangedListener(new TextWatcher() {
+            private String current = "";
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().equals(current)) {
+                    etUang.removeTextChangedListener(this);
+
+                    String cleanString = s.toString().replaceAll("[^\\d]", "");
+                    if (!cleanString.isEmpty()) {
+                        int parsed = Integer.parseInt(cleanString);
+                        String formatted = "Rp." + formattedNumber(parsed);
+                        current = formatted;
+                        etUang.setText(formatted);
+                        etUang.setSelection(formatted.length());
+                        calculateChange(parsed);
+                    }
+
+                    etUang.addTextChangedListener(this);
+                }
+            }
+        });
+    }
+
+    private void calculateChange(int uang) {
+        String totalText = totalTV.getText().toString().replaceAll("[^\\d]", "");
+        int total = totalText.isEmpty() ? 0 : Integer.parseInt(totalText);
+
+        if (uang <= 0) {
+            etKembalian.setText("Kembalian");
+        } else if (uang < total) {
+            etKembalian.setText("Uang tidak cukup");
+        } else {
+            int kembalian = uang - total;
+            etKembalian.setText("Rp." + formattedNumber(kembalian));
+        }
+    }
+
+
 
     private void setupSortSpinner(){
         ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(
@@ -73,24 +129,30 @@ public class MainActivity extends AppCompatActivity {
         spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0: // Sort by price ascending
-                        sortDataByPriceAscending();
-                        break;
-                    case 1: // Sort by price descending
-                        sortDataByPriceDescending();
-                        break;
-                    case 2:
-                        sortDataDefault();
-                        break;
-                }
+                currentSort = position; // Simpan posisi sortir
+                applySort(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                sortDataDefault();
+                currentSort = 2; // Default sortir
+                applySort(currentSort);
             }
         });
+    }
+
+    private void applySort(int position) {
+        switch (position) {
+            case 0: // Sort by price ascending
+                sortDataByPriceAscending();
+                break;
+            case 1: // Sort by price descending
+                sortDataByPriceDescending();
+                break;
+            default: // Default sorting
+                sortDataDefault();
+                break;
+        }
     }
 
     private void setupFAB() {
@@ -182,7 +244,13 @@ public class MainActivity extends AppCompatActivity {
 
         totalTV.setText("Total: Rp." + formattedNumber(total));
 
+        // Terapkan filter sesuai pilihan terakhir
+        applySort(currentSort);
 
+        // Recalculate change when the activity resumes
+        String uangText = etUang.getText().toString().replaceAll("[^\\d]", "");
+        int uang = uangText.isEmpty() ? 0 : Integer.parseInt(uangText);
+        calculateChange(uang);
     }
 
     private String formattedNumber(int harga) {

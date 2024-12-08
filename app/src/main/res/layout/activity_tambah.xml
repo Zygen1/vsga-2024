@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TambahActivity">
+    tools:context=".TambahActivity"
+    android:layout_marginTop="10dp">
 
 
     <TextView
@@ -31,7 +32,8 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/etHarga"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rounded_edittext_background"/>
 
     <TextView
         android:id="@+id/tvHarga"
@@ -58,15 +60,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/tvCatatan"
-        app:layout_constraintTop_toBottomOf="@+id/etNama" />
+        app:layout_constraintTop_toBottomOf="@+id/etNama"
+        android:background="@drawable/rounded_edittext_background"/>
 
     <TextView
         android:id="@+id/tvCatatan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:paddingTop="10dp"
-        android:layout_marginStart="10dp"
+        android:paddingEnd="5dp"
         android:text="@string/catatan"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,32 +92,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvCatatan"
-        app:layout_constraintTop_toBottomOf="@+id/etHarga" />
+        app:layout_constraintTop_toBottomOf="@+id/etHarga"
+        android:background="@drawable/rounded_edittext_background"/>
 
 
     <Button
         android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCatatan"
-        android:layout_marginTop="25dp"
         android:layout_marginStart="10dp"
-        android:paddingStart="70dp"
-        android:paddingEnd="70dp"
-        android:onClick="submitBTN"/>
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded_button_background"
+        android:onClick="submitBTN"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:layout_marginEnd="10dp"
+        android:text="Tambah"
+        android:textSize="17sp"
+        app:backgroundTint="@color/green"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCatatan" />
 
     <Button
         android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/cancel"
+        android:text="Batal"
+        app:layout_constraintStart_toEndOf="@id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCatatan"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
         android:paddingStart="70dp"
         android:paddingEnd="70dp"
-        android:onClick="cancelBTN"/>
+        android:onClick="cancelBTN"
+        android:background="@drawable/rounded_button_background"
+        app:backgroundTint="@color/Red"
+        android:textSize="17sp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
